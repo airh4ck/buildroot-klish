@@ -4,7 +4,7 @@ BINARIES_DIR="${0%/*}/"
 # shellcheck disable=SC2164
 cd "${BINARIES_DIR}"
 
-mode_serial=false
+mode_serial=true
 mode_sys_qemu=false
 while [ "$1" ]; do
     case "$1" in
