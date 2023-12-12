@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CLISH_MODULE xmlns="http://clish.sourceforge.net/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://clish.sourceforge.net/XMLSchema http://clish.sourceforge.net/XMLSchema/clish.xsd">
+    <!--=======================================================-->
+
+    <VIEW name="enable-view">
+
+        <COMMAND name="show bridges"
+            help="Bridges information">
+            <ACTION>brctl show</ACTION>
+        </COMMAND>
+
+    </VIEW>
+
+    <VIEW name="configure-view">
+        <COMMAND name="bridge"
+            help="Bridge configuration"
+            view="configure-bridge-view"
+            viewid="bridge=${bridge_name}">
+            <PARAM name="bridge_name"
+                help="Bridge name"
+                ptype="IFACE_NAME" />
+        </COMMAND>
+    </VIEW>
+
+    <VIEW name="configure-bridge-view"
+        prompt="${SYSTEM_NAME}(config-bridge-${bridge})# "
+        depth="1">
+
+        <!-- Inheritance -->
+
+        <NAMESPACE ref="configure-view"
+            help="false"
+            completion="true" />
+        <COMMAND name="exit"
+            help="Exit from bridge configuration mode"
+            lock="false">
+            <ACTION builtin="clish_nested_up" />
+        </COMMAND>
+
+        <COMMAND name="no"
+            help="Negate a command" />
+
+        <COMMAND name="create"
+            help="Create a bridge">
+            <ACTION>
+                brctl addbr ${bridge}
+            </ACTION>
+        </COMMAND>
+        <COMMAND name="addif"
+            help="Add interface to a bridge">
+            <PARAM name="ifname" help="Interface name" ptype="IFACE_NAME" />
+            <ACTION>
+                brctl addif ${bridge} ${ifname}
+            </ACTION>
+        </COMMAND>
+        <COMMAND name="no create"
+            help="Delete a bridge">
+            <ACTION>
+                brctl delbr ${bridge}
+            </ACTION>
+        </COMMAND>
+
+        <COMMAND name="no addif"
+            help="Add interface to a bridge">
+            <PARAM name="ifname" help="Interface name" ptype="IFACE_NAME" />
+            <ACTION>
+                brctl delif ${bridge} ${ifname}
+            </ACTION>
+        </COMMAND>
+    </VIEW>
+
+</CLISH_MODULE>
