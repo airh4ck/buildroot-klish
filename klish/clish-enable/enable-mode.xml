@@ -48,7 +48,7 @@
 
 	<COMMAND name="show running-config"
 		help="Current operating configuration">
-		<CONFIG operation="dump"/>
+		<ACTION>cat /tmp/running-config</ACTION>
 	</COMMAND>
 
 	<COMMAND name="show startup-config"
@@ -66,7 +66,7 @@
 
 	<COMMAND name="copy running-config startup-config"
 		help="Copy to startup configuration">
-		<CONFIG operation="dump" file="/etc/startup-config"/>
+		<ACTION>cp /tmp/running-config /etc/startup-config</ACTION>
 	</COMMAND>
 
 </VIEW>

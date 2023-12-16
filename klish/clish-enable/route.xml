@@ -28,6 +28,7 @@
 		<CONFIG operation="unset" pattern="^no ip routing"/>
 		<ACTION>
 		echo "1" > /proc/sys/net/ipv4/ip_forward
+		echo "ip routing" >> /tmp/running-config
 		</ACTION>
 	</COMMAND>
 
@@ -36,6 +37,7 @@
 		<CONFIG priority="0x1500"/>
 		<ACTION>
 		echo "0" > /proc/sys/net/ipv4/ip_forward
+		echo "no ip routing" >> /tmp/running-config
 		</ACTION>
 	</COMMAND>
 
@@ -49,6 +51,7 @@
 		<CONFIG priority="0x9000" splitter="false"/>
 		<ACTION>
 			ip route replace to default via ${ip}
+			echo "ip default-gateway ${ip}" >> /tmp/running-config
 		</ACTION>
 	</COMMAND>
 
@@ -57,6 +60,7 @@
 		<CONFIG operation="unset" pattern="^ip default-gateway"/>
 		<ACTION>
 			ip route delete to default
+			echo "no ip default-gateway" >> /tmp/running-config
 		</ACTION>
 	</COMMAND>
 
@@ -92,6 +96,7 @@
 			ip route replace to ${ip} via ${forward}
 			exit $?
 		fi
+		echo "ip route ${ip} ${route_target}" >> /tmp/running-config
 		</ACTION>
 	</COMMAND>
 
@@ -103,6 +108,7 @@
 		<CONFIG operation="unset" pattern="^ip route ${ip} "/>
 		<ACTION>
 		ip route delete to ${ip}
+		echo "no ip route ${ip}" >> /tmp/running-config
 		</ACTION>
 	</COMMAND>
 

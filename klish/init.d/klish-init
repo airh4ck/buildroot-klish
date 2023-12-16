@@ -1,5 +1,6 @@
 #! /bin/sh
 
+cp /etc/startup-config /tmp/running-config
 # Start conf server
 /usr/bin/konfd >/dev/null 2>/dev/null &
 

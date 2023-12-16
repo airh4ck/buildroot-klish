@@ -73,6 +73,8 @@
 			<CONFIG />
 			<ACTION>
 			ip addr add ${ip} dev ${iface}
+			echo "interface ${iface}" >> /tmp/running-config
+			echo "  ip address ${ip}" >> /tmp/running-config
 		</ACTION>
 		</COMMAND>
 
@@ -83,7 +85,9 @@
 				help="IP address"
 				ptype="IP_ADDR_WITH_MASK" />
 			<ACTION>
-			ip addr del ${ip} dev ${iface};
+			ip addr del ${ip} dev ${iface}
+			echo "interface ${iface}" >> /tmp/running-config
+			echo "  no ip address ${ip}" >> /tmp/running-config
 		</ACTION>
 		</COMMAND>
 
@@ -94,6 +98,8 @@
 			<CONFIG operation="unset" pattern="^enable" />
 			<ACTION>
 			ip link set ${iface} down
+			echo "interface ${iface}" >> /tmp/running-config
+			echo "  disable" >> /tmp/running-config
 		</ACTION>
 		</COMMAND>
 
@@ -102,6 +108,8 @@
 			<CONFIG />
 			<ACTION>
 			ip link set ${iface} up
+			echo "interface ${iface}" >> /tmp/running-config
+			echo "  enable" >> /tmp/running-config
 		</ACTION>
 		</COMMAND>
 
@@ -115,6 +123,8 @@
 				ptype="VLAN_ID" />
 			<ACTION>
 			vconfig add ${iface} ${vlan_id}
+			echo "interface ${iface}" >> /tmp/running-config
+			echo "  vlan add ${vlan_id}" >> /tmp/running-config
 		</ACTION>
 		</COMMAND>
 	</VIEW>

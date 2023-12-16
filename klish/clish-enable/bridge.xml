@@ -46,6 +46,8 @@
             help="Create a bridge">
             <ACTION>
                 brctl addbr ${bridge}
+                echo "bridge ${bridge}" >> /tmp/running-config
+                echo "  create" >> /tmp/running-config
             </ACTION>
         </COMMAND>
         <COMMAND name="addif"
@@ -53,12 +55,16 @@
             <PARAM name="ifname" help="Interface name" ptype="IFACE_NAME" />
             <ACTION>
                 brctl addif ${bridge} ${ifname}
+                echo "bridge ${bridge}" >> /tmp/running-config
+                echo "  addif ${ifname}" >> /tmp/running-config
             </ACTION>
         </COMMAND>
         <COMMAND name="no create"
             help="Delete a bridge">
             <ACTION>
                 brctl delbr ${bridge}
+                echo "bridge ${bridge}" >> /tmp/running-config
+                echo "  no create" >> /tmp/running-config
             </ACTION>
         </COMMAND>
 
@@ -67,6 +73,8 @@
             <PARAM name="ifname" help="Interface name" ptype="IFACE_NAME" />
             <ACTION>
                 brctl delif ${bridge} ${ifname}
+                echo "bridge ${bridge}" >> /tmp/running-config
+                echo "  no addif ${ifname}" >> /tmp/running-config
             </ACTION>
         </COMMAND>
     </VIEW>
